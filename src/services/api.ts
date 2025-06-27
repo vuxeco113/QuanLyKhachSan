@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { user } from '../type/user';
+import { Room } from '../type/room';
 
 
 export async function loginUser(
@@ -79,3 +80,44 @@ export async function registerUser(data: RegisterRequest): Promise<RegisterRespo
     };
   }
 }
+
+
+// Lấy tất cả các phòng
+export const fetchAllRooms = async (): Promise<Room[]> => {
+  try {
+    const response = await axios.get<Room[]>(`http://192.168.2.175/api/get_all_room.php`);
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi lấy danh sách phòng:', error);
+    throw error;
+  }
+};
+
+// Lấy phòng theo room_type
+export const fetchRoomsByType = async (roomType: string): Promise<Room[]> => {
+  try {
+    const response = await axios.get<Room[]>(
+      `http://192.168.2.175/api/get_room_by_roomtype.php`,
+      {
+        params: { room_type: roomType },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi lấy phòng theo loại:', error);
+    throw error;
+  }
+};
+
+// roomApi.ts
+export const fetchRoomTypes = async (): Promise<{ room_type_id: string, room_type_name: string }[]> => {
+  const response = await axios.get(`http://192.168.2.175/api/get_all_room_types.php`);
+  return response.data;
+};
+
+
+// roomApi.ts
+export const fetchRoomStatus = async (): Promise<{ room_status_id: string, room_status_name: string }[]> => {
+  const response = await axios.get(`http://192.168.2.175/api/get_all_room_status.php`);
+  return response.data;
+};
