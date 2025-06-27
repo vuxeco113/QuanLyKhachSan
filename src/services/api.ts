@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { user } from '../type/user';
 import { Room } from '../type/room';
+import { Booking } from '../type/booking';
 
 
 export async function loginUser(
@@ -121,3 +122,25 @@ export const fetchRoomStatus = async (): Promise<{ room_status_id: string, room_
   const response = await axios.get(`http://192.168.2.175/api/get_all_room_status.php`);
   return response.data;
 };
+
+
+
+// Gửi POST request để tạo booking
+export async function createBooking(booking: Booking): Promise<Booking | null> {
+  try {
+    const response = await axios.post<Booking>(
+      'http://192.168.2.175/api/create_booking.php', 
+      booking,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error('Lỗi tạo booking:', error.response?.data || error.message);
+    return null;
+  }
+}

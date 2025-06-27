@@ -3,13 +3,13 @@ import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import { useNavigation ,NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/type.ts'; // Điều chỉnh đường dẫn nếu cần
 
-const MoreScreen = () => {
+const ThongKeScreen = () => {
   // Sử dụng NavigationProp với RootStackParamList của bạn
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Màn hình nhiều hơn</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.loginLink}>
+      <Text style={styles.text}>Thống Kê</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.loginLink}>
         <Text style={styles.loginText}>Đã có tài khoản? Đăng nhập</Text>
       </TouchableOpacity>
     </View>
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 // Sử dụng cùng styles như OverviewScreen hoặc tạo styles riêng
-export default MoreScreen;
+export default ThongKeScreen;

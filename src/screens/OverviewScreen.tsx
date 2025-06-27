@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator,TouchableOpacity } from 'react-native';
 import { fetchAllRooms ,fetchRoomsByType,fetchRoomTypes,fetchRoomStatus } from '../services/api.ts'; //  điều chỉnh đường dẫn nếu cần
 import { Room } from '../type/room.ts';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation ,NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/type.ts'; // Điều chỉnh đường dẫn nếu cần
+
 const OverviewScreen = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,6 +53,9 @@ const OverviewScreen = () => {
     loadRooms();
   }, [selectedType, selectedStatus]);
 
+
+    // Sử dụng NavigationProp với RootStackParamList của bạn
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>
      
@@ -95,19 +101,28 @@ const OverviewScreen = () => {
           <Text>Đang tải...</Text>
         </View>
       ) : rooms.length > 0 ? (
-        <FlatList
-          data={rooms}
-          keyExtractor={(item) => item.room_id}
-          renderItem={({ item }) => (
+        <FlatList<Room> // 👈 ép kiểu rõ ràng tại đây
+        data={rooms}
+        keyExtractor={(item) => item.room_id}
+        renderItem={({ item }) => {
+          const room = item as Room; // 👈 ép kiểu item nếu cần dùng riêng
+          return (
             <View style={styles.roomItem}>
-              <Text style={styles.title}>{item.room_id} - {item.room_type}</Text>
-              <Text>Giá: {item.room_price.toLocaleString()} VND</Text>
-              <Text>Sức chứa: {item.room_capacity}</Text>
-              <Text>Trạng thái: {item.room_status}</Text>
-              <Text>Mô tả: {item.room_description}</Text>
+              <Text style={styles.title}>{room.room_id} - {room.room_type}</Text>
+              <Text>Giá: {room.room_price.toLocaleString()} VND</Text>
+              <Text>Sức chứa: {room.room_capacity}</Text>
+              <Text>Trạng thái: {room.room_status}</Text>
+              <Text>Mô tả: {room.room_description}</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Booking', { room })}
+              >
+                <Text style={styles.buttonText}>Tạo Phiếu Đặt</Text>
+              </TouchableOpacity>
             </View>
-          )}
-        />
+          );
+        }}
+      />
       ) : (
         <View style={styles.center}>
           <Text>Không có phòng nào khớp bộ lọc.</Text>
@@ -167,6 +182,18 @@ picker: {
   height: 60,
   width: '100%',
 },
+
+button:{
+            backgroundColor:'#007bff',
+            paddingVertical:14,
+            borderRadius:8
+        },
+        buttonText:{
+            color:'#fff',
+            textAlign:'center',
+            fontSize:16,
+            fontWeight:600
+        }
 });
 
 export default OverviewScreen;

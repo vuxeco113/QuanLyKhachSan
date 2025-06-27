@@ -5,6 +5,7 @@ import BookingScreen from '../screens/BookingScreen';
 import MoreScreen from '../screens/MoreScreen';
 import { Text } from 'react-native';
 import React from 'react';
+import ThongKeScreen from '../screens/ThongKeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }: { color: string }) => (
             <Text style={{ color }}>TQ</Text>
           ),
+          headerShown: false
         }}
       />
       <Tab.Screen 
@@ -38,16 +40,18 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }: { color: string }) => (
             <Text style={{ color }}>SĐ</Text>
           ),
+          headerShown: false
         }}
       />
       <Tab.Screen 
-        name="Đặt phòng" 
-        component={BookingScreen} 
+        name="Thống Kê" 
+        component={ThongKeScreen} 
         options={{
-          tabBarLabel: 'Đặt phòng',
+          tabBarLabel: 'Thống Kê',
           tabBarIcon: ({ color }: { color: string }) => (
             <Text style={{ color }}>ĐP</Text>
           ),
+          headerShown: false
         }}
       />
       <Tab.Screen 
@@ -58,6 +62,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }: { color: string }) => (
             <Text style={{ color }}>+</Text>
           ),
+          headerShown: false
         }}
       />
     </Tab.Navigator>
