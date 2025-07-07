@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import { useNavigation ,NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/type.ts'; // Điều chỉnh đường dẫn nếu cần
+import { BottomTabParamList } from '../navigation/BottomTabNavigator'; // Điều chỉnh đường dẫn nếu cần
 
 const MoreScreen = () => {
   // Sử dụng NavigationProp với RootStackParamList của bạn
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<BottomTabParamList>>();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Màn hình nhiều hơn</Text>

@@ -1,70 +1,34 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import OverviewScreen from '../screens/OverviewScreen';
-import UploadScreen from '../screens/RoomMapScreen';
-import BookingScreen from '../screens/BookingScreen';
-import MoreScreen from '../screens/MoreScreen';
-import { Text } from 'react-native';
 import React from 'react';
-import ThongKeScreen from '../screens/ThongKeScreen';
+import { SCREENS } from './screenNames.ts';
+import HomeScreen  from '../screens/HomeScreen.tsx';
+import SearchScreen  from '../screens/SearchScreen.tsx';
+import ProfileScreen  from '../screens/ProfileScreen.tsx';
+import OverviewScreen from '../screens/OverviewScreen.tsx';
+export type BottomTabParamList = {
+  [SCREENS.HOME]: undefined;
+  [SCREENS.SEARCH]: undefined;
+  [SCREENS.PROFILE]: undefined;
+  [SCREENS.MORESCREEN]:undefined;
+  [SCREENS.REGISTER]:undefined;
+  [SCREENS.OVERVIEWSCREEN]:undefined;
+};
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#3498db',
-        tabBarInactiveTintColor: '#666',
-        tabBarStyle: {
-          height: 60,
-          paddingBottom: 5,
-        },
+        tabBarActiveTintColor: 'blue',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false,
       }}
     >
-      <Tab.Screen 
-        name='Tổng quan'
-        component={OverviewScreen} 
-        options={{
-          tabBarLabel: 'Tổng quan1',
-          tabBarIcon: ({ color }: { color: string }) => (
-            <Text style={{ color }}>TQ</Text>
-          ),
-          headerShown: false
-        }}
-      />
-      <Tab.Screen 
-        name="Sơ đồ phòng" 
-        component={UploadScreen} 
-        options={{
-          tabBarLabel: 'Sơ đồ phòng',
-          tabBarIcon: ({ color }: { color: string }) => (
-            <Text style={{ color }}>SĐ</Text>
-          ),
-          headerShown: false
-        }}
-      />
-      <Tab.Screen 
-        name="Thống Kê" 
-        component={ThongKeScreen} 
-        options={{
-          tabBarLabel: 'Thống Kê',
-          tabBarIcon: ({ color }: { color: string }) => (
-            <Text style={{ color }}>ĐP</Text>
-          ),
-          headerShown: false
-        }}
-      />
-      <Tab.Screen 
-        name="Nhiều hơn" 
-        component={MoreScreen} 
-        options={{
-          tabBarLabel: 'Nhiều hơn',
-          tabBarIcon: ({ color }: { color: string }) => (
-            <Text style={{ color }}>+</Text>
-          ),
-          headerShown: false
-        }}
-      />
+      <Tab.Screen name={SCREENS.OVERVIEWSCREEN} component={OverviewScreen} />
+      <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
+      <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
+      <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

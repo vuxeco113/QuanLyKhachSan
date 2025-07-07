@@ -4,9 +4,9 @@ import { fetchAllRooms ,fetchRoomsByType,fetchRoomTypes,fetchRoomStatus } from '
 import { Room } from '../type/room.ts';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation ,NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/type.ts'; // Điều chỉnh đường dẫn nếu cần
 
-const OverviewScreen = () => {
+
+const OverviewScreen: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState('');
@@ -55,12 +55,12 @@ const OverviewScreen = () => {
 
 
     // Sử dụng NavigationProp với RootStackParamList của bạn
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+   
   return (
     <View style={styles.container}>
      
       <View style={styles.row}>
-  <View style={styles.pickerWrapper}>
+    <View style={styles.pickerWrapper}>
     <Text style={styles.label}>Loại:</Text>
     <Picker
       selectedValue={selectedType}
@@ -115,7 +115,7 @@ const OverviewScreen = () => {
               <Text>Mô tả: {room.room_description}</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Booking', { room })}
+                // onPress={() => navigation.navigate('Booking', { room })}
               >
                 <Text style={styles.buttonText}>Tạo Phiếu Đặt</Text>
               </TouchableOpacity>

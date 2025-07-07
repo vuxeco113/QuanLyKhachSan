@@ -1,22 +1,16 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
 import BottomTabNavigator from './BottomTabNavigator';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import BookingScreen from '../screens/BookingScreen'
-import ThongKeScreen from '../screens/ThongKeScreen'
+import AuthStack from '../navigation/AuthStack';
 
+const AppNavigator: React.FC = () => {
+  const { user } = useContext(AuthContext);
 
-const Stack = createNativeStackNavigator();
-
-const AppNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Main" component={BottomTabNavigator} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="ThongKe" component={ThongKeScreen}/>
-      <Stack.Screen name="Booking" component={BookingScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-    </Stack.Navigator>
+    <NavigationContainer>
+      {user ? <BottomTabNavigator /> : <AuthStack />}
+    </NavigationContainer>
   );
 };
 
